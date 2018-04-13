@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 26
@@ -16,6 +19,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    kapt {
+        generateStubs = true
+    }
 }
 
 dependencies {
@@ -25,4 +36,44 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    /*rx android and retrofit*/
+    compile('io.reactivex:rxandroid:1.2.1')
+    compile('io.reactivex:rxjava:1.1.6');
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
+    compile('com.squareup.retrofit2:retrofit:2.1.0')
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+
+    //gson convertor
+    compile('com.squareup.retrofit2:converter-gson:2.1.0')
+    //scalar convertor
+    compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    //retrofit interceptor
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'com.squareup.retrofit2:converter-simplexml:2.3.0'
+
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+    // butterknife
+    compile 'com.jakewharton:butterknife:8.8.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
+    // App's dependencies, including test
+    compile 'com.android.support:support-annotations:27.0.2'
+
+    def daggerVersion = '2.14.1'
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
